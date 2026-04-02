@@ -1,18 +1,17 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import bgImage from '../assets/bg.png';
-import PromptBox from '../components/promptBox';
+import AudioPromptBox from '../components/AudioPromptBox';
 
-const TextToVideo = () => {
+const TextToAudio = () => {
     return (
         <div className="min-h-screen w-full bg-[#020617] relative flex flex-col items-start p-10 md:p-20 overflow-x-hidden pt-28">
             <div className="fixed inset-0 z-0 opacity-20 bg-cover bg-center bg-no-repeat pointer-events-none" style={{ backgroundImage: `url(${bgImage})` }}></div>
             <div className="fixed inset-0 bg-black/60 pointer-events-none z-0"></div>
             <div className="relative z-10 w-full flex flex-col gap-12 mt-10">
-                <PromptBox />
+                <AudioPromptBox />
             </div>
         </div>
     );
 };
 
-export default TextToVideo;
+export default TextToAudio;
