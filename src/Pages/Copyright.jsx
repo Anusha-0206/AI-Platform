@@ -214,7 +214,15 @@ export default function Copyright() {
       <div className="cc-glow-left" />
       <div className="cc-glow-center" />
 
-      <div className="cc-page pt-20">
+      <div className="cc-page">
+        {/* ── NAVBAR ── */}
+        <div className="cc-navbar">
+          <button className="cc-back-btn" onClick={handleBack}>
+            <BackIcon />
+          </button>
+          <h1 className="cc-title">Copyright Checker</h1>
+        </div>
+
         {/* ── COLUMNS ── */}
         <div className="cc-columns">
           {/* ════ LEFT CARD ════ */}

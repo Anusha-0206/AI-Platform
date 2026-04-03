@@ -254,7 +254,14 @@ export default function WatermarkRemover() {
         />
       ))}
 
-      <div className="wmr-app pt-20">
+      {/* App shell */}
+      <div className="wmr-app">
+        {/* Header */}
+        <header className="wmr-header">
+          <IconChevronLeft />
+          <span className="wmr-title">Watermark Remover</span>
+        </header>
+
         {/* Main two-column layout */}
         <main className="wmr-main">
           {/* ── LEFT: Upload card + Preview ── */}

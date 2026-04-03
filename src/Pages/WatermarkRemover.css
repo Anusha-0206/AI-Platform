@@ -1,11 +1,18 @@
 @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap");
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 /* ─────────────────────────────────────────
    Root
 ───────────────────────────────────────── */
 .wmr-root {
   font-family: "Nunito", sans-serif;
+  background: url("/bg-image.png") no-repeat center center;
+  background-size: cover;
   color: #e8f0ff;
   min-height: 100vh;
   display: flex;
@@ -71,6 +78,37 @@
 /* ─────────────────────────────────────────
    Header
 ───────────────────────────────────────── */
+.wmr-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 22px 44px;
+  border-bottom: 1px solid rgba(79, 143, 255, 0.13);
+  backdrop-filter: blur(14px);
+  background: rgba(6, 13, 31, 0.45);
+}
+
+.wmr-back-icon {
+  width: 22px;
+  height: 22px;
+  color: #e8f0ff;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: opacity 0.2s;
+}
+
+.wmr-back-icon:hover {
+  opacity: 0.65;
+}
+
+/* Title — Nunito Bold, matches reference screenshot */
+.wmr-title {
+  font-family: "Nunito", sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  letter-spacing: 0.01em;
+  color: #e8f0ff;
+}
 
 /* ─────────────────────────────────────────
    Main two-column area

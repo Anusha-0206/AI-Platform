@@ -41,15 +41,6 @@ const Home = () => {
         { label: 'Watermark Remover', img: watermarkRemoverV4 },
     ];
 
-    const routeMap = {
-        'Text to Video': '/text-to-video',
-        'Text to Image': '/text-to-image',
-        'Text to Audio': '/text-to-audio',
-        'Copyright Checker': '/copyright',
-        'Copyright Changer': '/copyright',
-        'Watermark Remover': '/watermark-remover',
-    };
-
     return (
         <div className="min-h-screen bg-[#020617] text-white overflow-x-hidden font-sans selection:bg-purple-500/30">
             {/* Background Image Layer */}
@@ -93,11 +84,12 @@ const Home = () => {
                     </div>
 
 
+                    {/* Right Column: Staggered Grid of Cards */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 relative lg:mt-0 max-w-[550px] lg:ml-auto">
                         {tools.map((tool, idx) => (
                             <div key={idx} className={`${idx % 2 !== 0 ? 'lg:translate-y-6' : ''}`}>
-                                {routeMap[tool.title] ? (
-                                    <Link to={routeMap[tool.title]} className="block w-full h-full">
+                                {tool.title === 'Text to Video' ? (
+                                    <Link to="/text-to-video" className="block w-full">
                                         <ToolCard tool={tool} />
                                     </Link>
                                 ) : (
@@ -110,7 +102,7 @@ const Home = () => {
 
 
                 {/* Stats Section: Modern Horizontal Row */}
-                <div className="relative z-10 max-w-full mt-16 pt-0">
+                <div className="relative z-10 max-w-full mt-16 pt-0 ml-40">
                     <div className="flex flex-wrap items-center justify-start gap-16 lg:gap-32">
                         {/* 5,000+ Creators */}
                         <div className="flex items-center gap-4 group">
@@ -161,12 +153,16 @@ const Home = () => {
                 </div>
 
                 {/* Bottom Section: Categories & Dynamic Preview */}
-                <div className="relative z-10 max-w-full px-8 lg:px-12 mt-20 grid lg:grid-cols-[1.2fr_0.8fr] gap-16 items-start">
+                <div className="relative z-10 max-w-[1850px] mx-auto px-4 mt-20 grid lg:grid-cols-[1.2fr_0.8fr] gap-16 items-center">
                     <div className="flex flex-wrap gap-4 max-w-3xl">
                         {tags.map((tag, idx) => (
                             <div key={idx}>
-                                {routeMap[tag.label] ? (
-                                    <Link to={routeMap[tag.label]} className="block">
+                                {tag.label === 'Text to Video' ? (
+                                    <Link to="/text-to-video" className="block">
+                                        <TagButton tag={tag} hoveredTag={hoveredTag} setHoveredTag={setHoveredTag} />
+                                    </Link>
+                                ) : tag.label === 'Text to Audio' ? (
+                                    <Link to="/text-to-audio" className="block">
                                         <TagButton tag={tag} hoveredTag={hoveredTag} setHoveredTag={setHoveredTag} />
                                     </Link>
                                 ) : (
@@ -224,26 +220,26 @@ const TagButton = ({ tag, hoveredTag, setHoveredTag }) => (
     <div className="relative w-[172px] h-[82px] rounded-[1.2rem] overflow-hidden group/border transition-all duration-500 hover:scale-110 hover:-translate-y-2">
         {/* Layer 1: Rotating Magenta Border Layer (Hidden on hover) */}
         <div className={`absolute inset-[-200%] animate-[spin_4s_linear_infinite] bg-[conic-gradient(from_0deg,#d946ef,transparent_30%,transparent_100%)] transition-opacity duration-300 ${hoveredTag?.label === tag.label ? 'opacity-0' : 'opacity-100'}`}></div>
-        
+
         {/* Layer 2: Inner Glass Cutout - Hollowing out the center */}
         <div className={`absolute inset-[1px] rounded-[1.1rem] backdrop-blur-xl transition-all duration-500 z-0
-            ${hoveredTag?.label === tag.label 
-                ? 'bg-purple-600/30' 
+            ${hoveredTag?.label === tag.label
+                ? 'bg-purple-600/30'
                 : 'bg-white/[0.05]'
             }`}
         ></div>
-        
+
         {/* Layer 3: Content Button */}
-        <div
+        <button
             onMouseEnter={() => setHoveredTag(tag)}
             onMouseLeave={() => setHoveredTag(null)}
-            className="relative w-full h-full flex flex-col items-center justify-center text-sm font-semibold tracking-tight text-center leading-tight p-3 z-10 transition-colors text-white/50 hover:text-white cursor-pointer"
+            className="relative w-full h-full flex flex-col items-center justify-center text-sm font-semibold tracking-tight text-center leading-tight p-3 z-10 transition-colors text-white/50 hover:text-white"
         >
             {tag.label.split(' ').map((word, i) => <div key={i}>{word}</div>)}
             {hoveredTag?.label === tag.label && (
                 <div className="absolute inset-0 bg-purple-500/10 blur-xl -z-10 rounded-full animate-pulse"></div>
             )}
-        </div>
+        </button>
     </div>
 );
 

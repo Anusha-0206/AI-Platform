@@ -42,7 +42,13 @@ function TextImage() {
   ];
 
   return (
-    <div className="main pt-20">
+    <div className="main">
+      {/* 🔥 NAVBAR */}
+      <div className="navbar">
+        <span className="back-arrow">←</span>
+        <h1>Text to Image</h1>
+      </div>
+
       {/* 🔥 CONTENT */}
       <div className="app">
         <div className="card">
