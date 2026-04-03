@@ -41,11 +41,20 @@ const Home = () => {
         { label: 'Watermark Remover', img: watermarkRemoverV4 },
     ];
 
+    const routeMap = {
+        'Text to Video': '/text-to-video',
+        'Text to Image': '/text-to-image',
+        'Text to Audio': '/text-to-audio',
+        'Copyright Checker': '/copyright',
+        'Copyright Changer': '/copyright',
+        'Watermark Remover': '/watermark-remover',
+    };
+
     return (
         <div className="min-h-screen bg-[#020617] text-white overflow-x-hidden font-sans selection:bg-purple-500/30">
             {/* Background Image Layer */}
             <div
-                className="fixed inset-0 z-0 opacity-40 bg-cover bg-center bg-no-repeat pointer-events-none"
+                className="fixed inset-0 z-0 opacity-100 bg-cover bg-center bg-no-repeat pointer-events-none"
                 style={{ backgroundImage: `url(${bgImg})` }}
             ></div>
 
@@ -84,12 +93,11 @@ const Home = () => {
                     </div>
 
 
-                    {/* Right Column: Staggered Grid of Cards */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 relative lg:mt-0 max-w-[550px] lg:ml-auto">
                         {tools.map((tool, idx) => (
                             <div key={idx} className={`${idx % 2 !== 0 ? 'lg:translate-y-6' : ''}`}>
-                                {tool.title === 'Text to Video' ? (
-                                    <Link to="/text-to-video" className="block w-full">
+                                {routeMap[tool.title] ? (
+                                    <Link to={routeMap[tool.title]} className="block w-full h-full">
                                         <ToolCard tool={tool} />
                                     </Link>
                                 ) : (
@@ -102,7 +110,7 @@ const Home = () => {
 
 
                 {/* Stats Section: Modern Horizontal Row */}
-                <div className="relative z-10 max-w-full mt-16 pt-0 ml-40">
+                <div className="relative z-10 max-w-full mt-16 pt-0">
                     <div className="flex flex-wrap items-center justify-start gap-16 lg:gap-32">
                         {/* 5,000+ Creators */}
                         <div className="flex items-center gap-4 group">
@@ -153,16 +161,12 @@ const Home = () => {
                 </div>
 
                 {/* Bottom Section: Categories & Dynamic Preview */}
-                <div className="relative z-10 max-w-[1850px] mx-auto px-4 mt-20 grid lg:grid-cols-[1.2fr_0.8fr] gap-16 items-center">
+                <div className="relative z-10 max-w-full px-8 lg:px-12 mt-20 grid lg:grid-cols-[1.2fr_0.8fr] gap-16 items-start">
                     <div className="flex flex-wrap gap-4 max-w-3xl">
                         {tags.map((tag, idx) => (
                             <div key={idx}>
-                                {tag.label === 'Text to Video' ? (
-                                    <Link to="/text-to-video" className="block">
-                                        <TagButton tag={tag} hoveredTag={hoveredTag} setHoveredTag={setHoveredTag} />
-                                    </Link>
-                                ) : tag.label === 'Text to Audio' ? (
-                                    <Link to="/text-to-audio" className="block">
+                                {routeMap[tag.label] ? (
+                                    <Link to={routeMap[tag.label]} className="block">
                                         <TagButton tag={tag} hoveredTag={hoveredTag} setHoveredTag={setHoveredTag} />
                                     </Link>
                                 ) : (
@@ -194,6 +198,10 @@ const Home = () => {
                     0%, 100% { opacity: 0.2; transform: scale(1); }
                     50% { opacity: 0.3; transform: scale(1.1); }
                 }
+                @keyframes spin {
+                    from { transform: rotate(0deg); }
+                    to { transform: rotate(360deg); }
+                }
                 .selection\\:bg-purple-500\\/30 ::selection {
                     background: rgba(168, 85, 247, 0.3);
                 }
@@ -213,21 +221,30 @@ const ToolCard = ({ tool }) => (
 );
 
 const TagButton = ({ tag, hoveredTag, setHoveredTag }) => (
-    <button
-        onMouseEnter={() => setHoveredTag(tag)}
-        onMouseLeave={() => setHoveredTag(null)}
-        className={`w-[170px] h-[80px] flex flex-col items-center justify-center rounded-2xl border text-sm font-semibold tracking-tight text-center leading-tight p-3
-            transition-all duration-500 [transition-timing-function:cubic-bezier(0.68,-0.55,0.27,1.55)]
-            ${hoveredTag?.label === tag.label
-                ? 'bg-purple-600/20 border-purple-500 text-white shadow-[0_0_30px_rgba(168,85,247,0.4)] scale-110 -translate-y-2'
-                : 'bg-white/[0.03] border-white/5 text-white/40 hover:bg-white/10 hover:border-white/20'
+    <div className="relative w-[172px] h-[82px] rounded-[1.2rem] overflow-hidden group/border transition-all duration-500 hover:scale-110 hover:-translate-y-2">
+        {/* Layer 1: Rotating Magenta Border Layer (Hidden on hover) */}
+        <div className={`absolute inset-[-200%] animate-[spin_4s_linear_infinite] bg-[conic-gradient(from_0deg,#d946ef,transparent_30%,transparent_100%)] transition-opacity duration-300 ${hoveredTag?.label === tag.label ? 'opacity-0' : 'opacity-100'}`}></div>
+        
+        {/* Layer 2: Inner Glass Cutout - Hollowing out the center */}
+        <div className={`absolute inset-[1px] rounded-[1.1rem] backdrop-blur-xl transition-all duration-500 z-0
+            ${hoveredTag?.label === tag.label 
+                ? 'bg-purple-600/30' 
+                : 'bg-white/[0.05]'
             }`}
-    >
-        {tag.label.split(' ').map((word, i) => <div key={i}>{word}</div>)}
-        {hoveredTag?.label === tag.label && (
-            <div className="absolute inset-0 bg-purple-500/10 blur-xl -z-10 rounded-full animate-pulse"></div>
-        )}
-    </button>
+        ></div>
+        
+        {/* Layer 3: Content Button */}
+        <div
+            onMouseEnter={() => setHoveredTag(tag)}
+            onMouseLeave={() => setHoveredTag(null)}
+            className="relative w-full h-full flex flex-col items-center justify-center text-sm font-semibold tracking-tight text-center leading-tight p-3 z-10 transition-colors text-white/50 hover:text-white cursor-pointer"
+        >
+            {tag.label.split(' ').map((word, i) => <div key={i}>{word}</div>)}
+            {hoveredTag?.label === tag.label && (
+                <div className="absolute inset-0 bg-purple-500/10 blur-xl -z-10 rounded-full animate-pulse"></div>
+            )}
+        </div>
+    </div>
 );
 
 export default Home;

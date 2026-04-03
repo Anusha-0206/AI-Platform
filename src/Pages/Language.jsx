@@ -16,7 +16,7 @@ const LanguageSelection = () => {
 
     return (
         <div className="min-h-screen bg-[#020617] text-white font-sans selection:bg-purple-500/30 overflow-x-hidden relative">
-            <div className="fixed inset-0 z-0 opacity-20 bg-cover bg-center bg-no-repeat pointer-events-none" style={{ backgroundImage: `url(${bgImg})` }}></div>
+            <div className="fixed inset-0 z-0 opacity-100 bg-cover bg-center bg-no-repeat pointer-events-none" style={{ backgroundImage: `url(${bgImg})` }}></div>
             
             <div className="relative z-10 max-w-5xl mx-auto px-6 pt-16 pb-20">
 

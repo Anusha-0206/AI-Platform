@@ -73,7 +73,7 @@ const Profile = () => {
         <div className="min-h-screen bg-[#021021] text-white font-sans selection:bg-purple-500/30 overflow-x-hidden relative pt-16">
 
             {/* Background Layer */}
-            <div className="fixed inset-0 z-0 opacity-20 bg-cover bg-center bg-no-repeat pointer-events-none" style={{ backgroundImage: `url(${bgImg})` }}></div>
+            <div className="fixed inset-0 z-0 opacity-100 bg-cover bg-center bg-no-repeat pointer-events-none" style={{ backgroundImage: `url(${bgImg})` }}></div>
             
             <div className="relative z-10 max-w-6xl mx-auto px-6 py-6 space-y-6">
                 
